@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/config.css}" href="css/config.css">
+    <title>Configuration</title>
+</head>
+
+<body>
+<div class="title1">Configuration</div>
+
+<form th:action="@{/edit}" th:method="GET">
+
+    <div>
+        <table >
+            <tr>
+                <th>#</th>
+                <th>Parameter name</th>
+                <th>value</th>
+            </tr>
+
+            <tr th:each="currentParameter, itemStat : ${parametersList}">
+                <td th:utext="${itemStat.index+1}"></td>
+                <td th:utext="${currentParameter.name}" class="table"></td>
+                <td th:utext="${currentParameter.parameterValue}" class="table"/>
+            </tr>
+        </table>
+    </div>
+
+
+    <div class="row">
+        <button type="submit">Edit parameters</button>
+    </div>
+
+</form>
+
+</body>
+</html>

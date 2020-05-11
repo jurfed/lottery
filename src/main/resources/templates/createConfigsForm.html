@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/config.css}" href="css/config.css">
+    <title>Create configs</title>
+</head>
+<body>
+
+<div class="title1">Edit config parameters</div>
+<form action="#" th:action="@{/save}" th:object="${form}"
+      method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+        <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+
+            <table>
+                <thead>
+                <tr>
+                    <th>Parameter name</th>
+                    <th>value</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="config, itemStat : *{configs}">
+                    <td><input th:field="*{configs[__${itemStat.index}__].name}" class="table"/></td>
+                    <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}"  class="table"/></td>
+                </tr>
+                </tbody>
+            </table>
+
+    </fieldset>
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,22 @@
+.title1 {
+    font-family: serif;
+    font-size: 40px;
+    text-align: center;
+    color: lightblue;
+}
+
+.parameters, .parameters td {
+    border: 1px solid lightgray;
+    padding: 5px;
+}
+
+h1 {
+    color:#0000FF;
+    font-size: 10px;
+}
+
+.table{
+    border: 3px solid grey;
+    width: 300px;
+    position: relative;
+}
