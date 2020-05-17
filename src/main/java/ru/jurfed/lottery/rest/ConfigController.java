@@ -21,7 +21,11 @@ public class ConfigController {
         this.repository = repository;
     }
 
-
+    /**
+     * show parameters list
+     * @param model
+     * @return
+     */
     @GetMapping("/")
     public String listPage(Model model) {
         List<Config> parameters = repository.findAll();
@@ -30,19 +34,48 @@ public class ConfigController {
     }
 
 
+    /**
+     * form for edit all parameters
+     * @param model
+     * @return
+     */
     @GetMapping("/edit")
     public String showCreateForm(Model model) {
         List<Config> parameters = repository.findAll();
 
         EditConfigDto configsForm = new EditConfigDto(parameters);
-        model.addAttribute("form", configsForm);
-        return "createConfigsForm";
+        model.addAttribute("configsForm", configsForm);
+        return "editConfigsForm";
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    /**
+     * show all parameters after edit
+     * @param configCreationDto
+     * @param model
+     * @return
+     */
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     public String savePerson(@ModelAttribute EditConfigDto configCreationDto, Model model) {
         repository.saveAll(configCreationDto.getConfigs());
 
+        List<Config> parameters = repository.findAll();
+        model.addAttribute("parametersList", parameters);
+        return "config";
+    }
+
+    @GetMapping("/addParameter")
+    public String addParameter(Model model) {
+        Config config = new Config();
+
+        model.addAttribute("config", config);
+        return "addParameter";
+    }
+
+    @PostMapping("/saveParameter")
+    public String saveParameter(@ModelAttribute Config config, Model model) {
+        if(!config.getName().isEmpty()){
+            repository.save(config);
+        }
         List<Config> parameters = repository.findAll();
         model.addAttribute("parametersList", parameters);
         return "config";

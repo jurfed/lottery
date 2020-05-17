@@ -7,6 +7,10 @@ import javax.persistence.*;
 @Table(name = "parameters")
 public class Config {
 
+
+    public Config() {
+    }
+
     @Id
     @Column(name = "parameter_name")
     private String name;

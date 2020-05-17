@@ -20,3 +20,10 @@ h1 {
     width: 300px;
     position: relative;
 }
+
+.tableInactive{
+    border: 3px solid grey;
+    width: 300px;
+    position: relative;
+    background-color: aliceblue;
+}

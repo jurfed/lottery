@@ -8,13 +8,13 @@
 <body>
 
 <div class="title1">Edit config parameters</div>
-<form action="#" th:action="@{/save}" th:object="${form}"
+<form action="#" th:action="@{/}" th:object="${configsForm}"
       method="post">
     <fieldset>
         <input type="submit" id="submitButton" th:value="Save">
         <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
 
-            <table>
+            <table style="horiz-align: center">
                 <thead>
                 <tr>
                     <th>Parameter name</th>
@@ -24,7 +24,7 @@
                 <tbody>
                 <tr th:each="config, itemStat : *{configs}">
                     <td><input th:field="*{configs[__${itemStat.index}__].name}" class="table"/></td>
-                    <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}"  class="table"/></td>
+                    <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}"  class="tableInactive"/></td>
                 </tr>
                 </tbody>
             </table>

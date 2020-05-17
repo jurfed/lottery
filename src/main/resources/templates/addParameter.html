@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/config.css}" href="css/config.css">
+    <title>Add parameter</title>
+</head>
+<body>
+
+<div class="title1">Add parameter</div>
+<form action="#" th:action="@{/saveParameter}" method="post">
+    <fieldset>
+        <input type="submit" id="submitButton" th:value="Save">
+
+            <table style="horiz-align: center">
+                <thead>
+                <tr>
+                    <th>Parameter name</th>
+                    <th>value</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <td><input th:field="${config.name}" class="tableInactive"/></td>
+                    <td><input th:field="${config.parameterValue}"  class="tableInactive"/></td>
+                </tbody>
+            </table>
+
+    </fieldset>
+</form>
+
+
+</body>
+</html>
