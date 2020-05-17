@@ -4,7 +4,7 @@ package ru.jurfed.lottery.domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "parameters")
+@Table(name = "PARAMETERS")
 public class Config {
 
 

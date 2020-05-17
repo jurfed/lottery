@@ -1,0 +1,20 @@
+{
+  "games": [
+    {
+      "gameId": "1",
+      "gameName": "game 1"
+    },
+    {
+      "gameId": "2",
+      "gameName": "game 2"
+    },
+    {
+      "gameId": "3",
+      "gameName": "game 3"
+    },
+    {
+      "gameId": "4",
+      "gameName": "game 4"
+    }
+  ]
+}

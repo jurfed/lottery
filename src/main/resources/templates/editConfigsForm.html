@@ -23,8 +23,9 @@
                 </thead>
                 <tbody>
                 <tr th:each="config, itemStat : *{configs}">
-                    <td><input th:field="*{configs[__${itemStat.index}__].name}" class="table"/></td>
+                    <td><input th:field="*{configs[__${itemStat.index}__].name}" class="tableInactive"/></td>
                     <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}"  class="tableInactive"/></td>
+                    <td><a th:href="@{/delete(id=*{configs[__${itemStat.index}__].name})}">Delete</a></td>
                 </tr>
                 </tbody>
             </table>

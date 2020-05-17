@@ -49,7 +49,7 @@ public class ConfigController {
     }
 
     /**
-     * show all parameters after edit
+     * save all parameters after edit
      * @param configCreationDto
      * @param model
      * @return
@@ -63,6 +63,11 @@ public class ConfigController {
         return "config";
     }
 
+    /**
+     * add new parameter
+     * @param model
+     * @return
+     */
     @GetMapping("/addParameter")
     public String addParameter(Model model) {
         Config config = new Config();
@@ -71,6 +76,12 @@ public class ConfigController {
         return "addParameter";
     }
 
+    /**
+     * save new parameter
+     * @param config
+     * @param model
+     * @return
+     */
     @PostMapping("/saveParameter")
     public String saveParameter(@ModelAttribute Config config, Model model) {
         if(!config.getName().isEmpty()){
@@ -79,6 +90,22 @@ public class ConfigController {
         List<Config> parameters = repository.findAll();
         model.addAttribute("parametersList", parameters);
         return "config";
+    }
+
+    /**
+     * delete parameter
+     * @param parameterName
+     * @param model
+     * @return
+     */
+    @GetMapping("/delete")
+    public String delete(@RequestParam("id") String parameterName, Model model) {
+        repository.deleteById(parameterName);
+
+        List<Config> parameters = repository.findAll();
+        EditConfigDto configsForm = new EditConfigDto(parameters);
+        model.addAttribute("configsForm", configsForm);
+        return "editConfigsForm";
     }
 
 }
