@@ -1,11 +1,14 @@
 package ru.jurfed.lottery.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.jurfed.lottery.domain.Config;
-import ru.jurfed.lottery.domain.EditConfigDto;
+import ru.jurfed.lottery.domain.ConfigsDto;
+import ru.jurfed.lottery.domain.Game;
+import ru.jurfed.lottery.domain.GamesDto;
 import ru.jurfed.lottery.repository.ConfigRepository;
 
 import java.util.List;
@@ -43,7 +46,7 @@ public class ConfigController {
     public String showCreateForm(Model model) {
         List<Config> parameters = repository.findAll();
 
-        EditConfigDto configsForm = new EditConfigDto(parameters);
+        ConfigsDto configsForm = new ConfigsDto(parameters);
         model.addAttribute("configsForm", configsForm);
         return "editConfigsForm";
     }
@@ -55,7 +58,9 @@ public class ConfigController {
      * @return
      */
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String savePerson(@ModelAttribute EditConfigDto configCreationDto, Model model) {
+    public String savePerson(@ModelAttribute ConfigsDto configCreationDto, Model model) {
+
+        repository.deleteAll();
         repository.saveAll(configCreationDto.getConfigs());
 
         List<Config> parameters = repository.findAll();
@@ -103,9 +108,41 @@ public class ConfigController {
         repository.deleteById(parameterName);
 
         List<Config> parameters = repository.findAll();
-        EditConfigDto configsForm = new EditConfigDto(parameters);
+        ConfigsDto configsForm = new ConfigsDto(parameters);
         model.addAttribute("configsForm", configsForm);
         return "editConfigsForm";
+    }
+
+    /**
+     * save parameters from json
+     * 1) receive json in post - request from postman (@RequestBody) and it to the repository
+     * 2) return list of person to the postman (@ResponseBody)
+     * Postman -> http://localhost:8080/create -> POST -> Body -> raw -> JSON ->
+     * {
+     *   "configs": [
+     *     {
+     *       "name": "1",
+     *       "parameterValue": "game 1"
+     *     },
+     *     {
+     *       "name": "2",
+     *       "parameterValue": "game 2"
+     *     }
+     *   ]
+     * }
+     * or Poatman -> http://localhost:8080/create -> POST -> Body -> select file ->
+     * @param configsDto
+     */
+    @RequestMapping(value = "/addParameters", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody ConfigsDto saveConfigs(@RequestBody ConfigsDto configsDto) {
+
+        List<Config> configs = configsDto.getConfigs();
+
+        configs.forEach(repository::save);
+        List<Config> savedConfigs = repository.findAll();
+
+        ConfigsDto savedConfigsDto = new ConfigsDto(savedConfigs);
+        return savedConfigsDto;
     }
 
 }

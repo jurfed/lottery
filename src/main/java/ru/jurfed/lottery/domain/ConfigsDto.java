@@ -3,14 +3,14 @@ package ru.jurfed.lottery.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EditConfigDto {
+public class ConfigsDto {
     private List<Config> configs;
 
-    public EditConfigDto(List<Config> configs) {
+    public ConfigsDto(List<Config> configs) {
         this.configs = configs;
     }
 
-    public EditConfigDto() {
+    public ConfigsDto() {
         configs = new ArrayList<>();
     }
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.jurfed.lottery.domain.Game;
 import ru.jurfed.lottery.domain.GamesDto;
-import ru.jurfed.lottery.repository.ConfigRepository;
 import ru.jurfed.lottery.repository.GamesRepository;
 
 import java.util.List;
@@ -28,34 +27,29 @@ public class GamesController {
     /**
      * 1) receive json in post - request from postman (@RequestBody) and it to the repository
      * 2) return list of person to the postman (@ResponseBody)
-     * Poatman -> http://localhost:8080/create -> POST -> Body -> raw -> JSON ->
+     * Postman -> http://localhost:8080/create -> POST -> Body -> raw -> JSON ->
      * {
-     *   "games": [
-     *     {
-     *       "gameId": "1",
-     *       "gameName": "game 1"
-     *     },
-     *     {
-     *       "gameId": "2",
-     *       "gameName": "game 2"
-     *     },
-     *     {
-     *       "gameId": "3",
-     *       "gameName": "game 3"
-     *     },
-     *     {
-     *       "gameId": "4",
-     *       "gameName": "game 4"
-     *     }
-     *   ]
+     * "games": [
+     * {
+     * "gameId": "1",
+     * "gameName": "game 1"
+     * },
+     * {
+     * "gameId": "2",
+     * "gameName": "game 2"
      * }
-     * @param gamesDto
+     * ]
+     * }
+     * or Poatman -> http://localhost:8080/create -> POST -> Body -> select file ->
+     *
+     * @param newGames
      */
 //    @RequestMapping(value = "/create", method = RequestMethod.POST,produces = "application/xml")
-    @RequestMapping(value = "/addGames", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
-    public @ResponseBody GamesDto saveGames(@RequestBody GamesDto gamesDto) {
+    @RequestMapping(value = "/addGames", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public @ResponseBody
+    GamesDto saveGames(@RequestBody GamesDto newGames) {
 
-        List<Game> games = gamesDto.getGames();
+        List<Game> games = newGames.getGames();
 
         games.forEach(repository::save);
         List<Game> all = repository.findAll();
