@@ -7,8 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.jurfed.lottery.domain.Config;
 import ru.jurfed.lottery.domain.ConfigsDto;
-import ru.jurfed.lottery.domain.Game;
-import ru.jurfed.lottery.domain.GamesDto;
 import ru.jurfed.lottery.repository.ConfigRepository;
 
 import java.util.List;
@@ -29,7 +27,7 @@ public class ConfigController {
      * @param model
      * @return
      */
-    @GetMapping("/")
+    @GetMapping("/configs")
     public String listPage(Model model) {
         List<Config> parameters = repository.findAll();
         model.addAttribute("parametersList", parameters);
@@ -57,7 +55,7 @@ public class ConfigController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "/", method = RequestMethod.POST)
+    @RequestMapping(value = "/configs", method = RequestMethod.POST)
     public String savePerson(@ModelAttribute ConfigsDto configCreationDto, Model model) {
 
         repository.deleteAll();
@@ -78,7 +76,7 @@ public class ConfigController {
         Config config = new Config();
 
         model.addAttribute("config", config);
-        return "addParameter";
+        return "addConfigs";
     }
 
     /**

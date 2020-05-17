@@ -8,11 +8,9 @@
 <body>
 
 <div class="title1">Add parameter</div>
-<form action="#" th:action="@{/saveParameter}" method="post">
+<form action="#" th:action="@{/saveParameter}" method="post" class="table2">
     <fieldset>
-        <input type="submit" id="submitButton" th:value="Save">
-
-            <table style="horiz-align: center">
+            <table>
                 <thead>
                 <tr>
                     <th>Parameter name</th>
@@ -26,6 +24,8 @@
             </table>
 
     </fieldset>
+    <div style="height: 10px"/>
+    <input type="submit" id="submitButton" th:value="Save">
 </form>
 
 

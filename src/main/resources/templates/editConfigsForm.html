@@ -8,30 +8,35 @@
 <body>
 
 <div class="title1">Edit config parameters</div>
-<form action="#" th:action="@{/}" th:object="${configsForm}"
-      method="post">
-    <fieldset>
+
+<div class="table2">
+    <form th:action="@{/configs}" th:object="${configsForm}" method="post">
+
+        <table class="table">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Edit parameter name</th>
+                <th>Edit value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="config, itemStat : *{configs}">
+                <td th:utext="${itemStat.index+1}"></td>
+                <td><input th:field="*{configs[__${itemStat.index}__].name}" class="tableInactive"/></td>
+                <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}" class="tableInactive"/></td>
+                <td><a th:href="@{/delete(id=*{configs[__${itemStat.index}__].name})}">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <div style="height: 10px"/>
         <input type="submit" id="submitButton" th:value="Save">
         <input type="reset" id="resetButton" name="reset" th:value="Reset"/>
+    </form>
 
-            <table style="horiz-align: center">
-                <thead>
-                <tr>
-                    <th>Parameter name</th>
-                    <th>value</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="config, itemStat : *{configs}">
-                    <td><input th:field="*{configs[__${itemStat.index}__].name}" class="tableInactive"/></td>
-                    <td><input th:field="*{configs[__${itemStat.index}__].parameterValue}"  class="tableInactive"/></td>
-                    <td><a th:href="@{/delete(id=*{configs[__${itemStat.index}__].name})}">Delete</a></td>
-                </tr>
-                </tbody>
-            </table>
 
-    </fieldset>
-</form>
+</div>
 
 
 </body>
