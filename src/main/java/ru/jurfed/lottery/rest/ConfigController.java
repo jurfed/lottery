@@ -143,4 +143,11 @@ public class ConfigController {
         return savedConfigsDto;
     }
 
+
+    @RequestMapping(value = "/allparameters", method = RequestMethod.GET)
+    public @ResponseBody List<Config> savePerson() {
+        List<Config> all = repository.findAll();
+        return all;
+    }
+
 }

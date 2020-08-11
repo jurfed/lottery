@@ -28,14 +28,15 @@ class LotteryServerApplicationTests {
 	{
 		RestTemplate restTemplate = new RestTemplate();
 
-		final String baseUrl = "http://localhost:" + randomServerPort + "/";
+		final String baseUrl = "http://localhost:" + randomServerPort + "/allparameters";
 		URI uri = new URI(baseUrl);
 
 		ResponseEntity<String> result = restTemplate.getForEntity(uri, String.class);
 
 		//Verify request succeed
 		Assert.assertEquals(200, result.getStatusCodeValue());
-		Assert.assertEquals(true, result.getBody().contains("Games"));
+		Assert.assertEquals(true, result.getBody().contains("Current balance"));
+
 	}
 
 }
