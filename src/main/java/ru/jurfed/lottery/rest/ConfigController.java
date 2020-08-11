@@ -115,7 +115,7 @@ public class ConfigController {
      * save parameters from json
      * 1) receive json in post - request from postman (@RequestBody) and it to the repository
      * 2) return list of person to the postman (@ResponseBody)
-     * Postman -> http://localhost:8080/create -> POST -> Body -> raw -> JSON ->
+     * Postman -> http://localhost:8080/addParameters -> POST -> Body -> raw -> JSON ->
      * {
      *   "configs": [
      *     {
@@ -128,7 +128,7 @@ public class ConfigController {
      *     }
      *   ]
      * }
-     * or Poatman -> http://localhost:8080/create -> POST -> Body -> select file ->
+     * or Poatman -> ccc-> POST -> Body -> binary -> select file (configs.json)
      * @param configsDto
      */
     @RequestMapping(value = "/addParameters", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE)
