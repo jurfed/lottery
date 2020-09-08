@@ -1,21 +1,34 @@
 package ru.jurfed.lottery.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.WebApplicationContext;
 import ru.jurfed.lottery.domain.Config;
 import ru.jurfed.lottery.domain.ConfigsDto;
 import ru.jurfed.lottery.repository.ConfigRepository;
+import ru.jurfed.lottery.test.Employee;
+import ru.jurfed.lottery.test.HelloMessageGenerator;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 //@RestController
+//https://www.baeldung.com/spring-bean-scopes
 @Controller
 public class ConfigController {
 
+
+
     private final ConfigRepository repository;
+
+
 
     @Autowired
     public ConfigController(ConfigRepository repository) {
@@ -56,7 +69,7 @@ public class ConfigController {
      * @return
      */
     @RequestMapping(value = "/configs", method = RequestMethod.POST)
-    public String savePerson(@ModelAttribute ConfigsDto configCreationDto, Model model) {
+    public String savePerson(@ModelAttribute ConfigsDto configCreationDto, Model model, HttpSession session) {
 
         repository.deleteAll();
         repository.saveAll(configCreationDto.getConfigs());
@@ -148,6 +161,39 @@ public class ConfigController {
     public @ResponseBody List<Config> savePerson() {
         List<Config> all = repository.findAll();
         return all;
+    }
+
+    //test hello message with scope request
+    @Bean
+    @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    public HelloMessageGenerator requestScopedBean() {
+        return new HelloMessageGenerator();
+    }
+
+    @Resource(name = "requestScopedBean")
+    HelloMessageGenerator requestScopedBean;
+
+    @RequestMapping("/scopes/request")
+    public String getRequestScopeMessage(final Model model) {
+        model.addAttribute("previousMessage", requestScopedBean.getMessage());
+        requestScopedBean.setMessage("Good morning!");
+        model.addAttribute("currentMessage", requestScopedBean.getMessage());
+        return "scopesExample";
+    }
+
+    //test model method attribute -добавляет в модель атрибут при каждом вызове любого метода в контроллере
+    @ModelAttribute
+    public void addAttributes(Model model) {
+        model.addAttribute("msg", "Welcome to the Netherlands!");
+    }
+
+    //test model method argument attribute - создает аттрибут при первом обращении ??? и помещает его в модель
+    @RequestMapping(value = "/addEmployee", method = RequestMethod.POST)
+    public String submit(@ModelAttribute("employee2") Employee employee, Model model) {
+        // Code that uses the employee object
+        model.addAttribute("employee2", new Employee("ttttt"));
+
+        return "employeeView";
     }
 
 }
